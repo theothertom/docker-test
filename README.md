@@ -5,10 +5,10 @@ This is a basic Docker host for local testing, with some convenience wrappers.
 
 ### Usage
 There are multiple phases of the Vagrant box build, which are coordinated by a Makefile. These steps are:
-Start/configure the base VM (vagrant up)
-Start a Docker registry on the VM (docker run registry:2)
-Build a sample container, and push to registry (docker build; docker push)
-Run smoke tests (./VM/tests/smoke.sh)
+* Start/configure the base VM (vagrant up)
+* Start a Docker registry on the VM (docker run registry:2)
+* Build a sample container, and push to registry (docker build; docker push)
+* Run smoke tests (./VM/tests/smoke.sh)
 
 See `make help` for more details
 
