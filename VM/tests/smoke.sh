@@ -9,7 +9,7 @@ overall_status=0
 
 echo -n 'Checking demo/hello-world container...'
 #Service may take a few seconds to start during first provision. Do this pending retry logic.
-timeout 2 curl -s --fail 192.168.33.10:8080 > /dev/null || sleep 10
+timeout 2 curl -s --fail 192.168.33.10:8080 > /dev/null || sleep 2
 timeout 2 curl -s --fail 192.168.33.10:8080 > /dev/null
 if [ "$?" -eq 0 ]; then
     echo "OK"
@@ -19,7 +19,7 @@ else
 fi
 
 echo -n 'Checking local registry...'
-timeout 2 curl -s --fail 192.168.33.10:5000 > /dev/null || sleep 10
+timeout 2 curl -s --fail 192.168.33.10:5000 > /dev/null || sleep 2
 timeout 2 curl -s --fail 192.168.33.10:5000 > /dev/null
 if [ "$?" -eq 0 ]; then
     echo "OK"
