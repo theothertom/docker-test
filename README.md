@@ -11,7 +11,7 @@ There are multiple phases of the Vagrant box build, which are coordinated by a M
 * "Deploy" the built container via a SystemD unitfile
 * Run smoke tests (./VM/tests/smoke.sh)
 
-See `make help` for more details
+See `make help` for more details, or run `make` to build
 
 ### Box internals
 The box is running on CentOS 7, with a Docker daemon. In addition, it is running a local Docker registry, to make it simpler to simulate production-like running of containers.

@@ -12,6 +12,8 @@ vagrantprovision: vagrantup ## Provision an already started Vagrant box
 
 smoketest: runhelloworld ## Run simple smoketests
 	./VM/tests/smoke.sh
+	@echo "Smoke tests have passed, you should be able to run the following and get output:"
+	@echo "curl http://192.168.33.10:8080"
 
 buildhelloworld: vagrantprovision ## Build hello-world container (inside Vagrant box to avoid local deps)
 	vagrant ssh -c 'cd /vagrant/containers/hello-world/; sudo docker build -t localhost:5000/hello-world .'
