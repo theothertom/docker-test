@@ -10,9 +10,22 @@ vagrantup: .vagrant/machines/default/virtualbox/action_provision ## Start Vagran
 vagrantprovision: vagrantup ## Provision an already started Vagrant box
 	vagrant provision
 
-smoketest: vagrantprovision ## Run simple smoketests
+smoketest: runhelloworld ## Run simple smoketests
 	./VM/tests/smoke.sh
+
+buildhelloworld: vagrantprovision ## Build hello-world container (inside Vagrant box to avoid local deps)
+	vagrant ssh -c 'cd /vagrant/containers/hello-world/; sudo docker build -t localhost:5000/hello-world .'
+
+pushhelloworld: buildhelloworld ## Push hello-world container to local registry
+	vagrant ssh -c 'cd /vagrant/containers/hello-world/; sudo docker push localhost:5000/hello-world'
+
+runhelloworld: pushhelloworld ## Ensure that the hello-world container is set up in systemd
+	#This doesn't use Ansible or similar, since it's being considered a "deployment"
+	vagrant ssh -c 'sudo cp /vagrant/containers/hello-world/unitfile.conf /etc/systemd/system/docker-nginx-hello-world.service; sudo systemctl daemon-reload; sudo systemctl restart docker-nginx-hello-world'
 
 help:
 	#Allow inline help
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/:.*##/: /' | sort
+
+destroy: ## Destroy Vagrant box
+	vagrant destroy -f
